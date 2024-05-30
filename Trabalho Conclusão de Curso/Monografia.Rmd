@@ -1,0 +1,2393 @@
+---
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
+    latex_engine: pdflatex
+    number_section: yes
+
+header-includes:
+   - \usepackage[brazilian]{babel} # idioma
+   - \usepackage[utf8]{inputenc}  # acento
+   - \usepackage{indentfirst} 
+   - \usepackage{graphicx}
+   - \usepackage{epstopdf}
+   - \usepackage{lipsum}
+   - \usepackage[T1]{fontenc}
+   - \usepackage{lscape}
+   - \newcommand{\blandscape}{\begin{landscape}}
+   - \newcommand{\elandscape}{\end{landscape}}
+   - \usepackage{multirow}
+   - \usepackage{longtable} 
+   - \usepackage{caption}
+   - \captionsetup[table]{font=bf,position=below} # legenda tabelas negrito e centralizadas
+   - \captionsetup[figure]{font=bf,position=below} # legenda imagens negrito e centralizadas
+   - \usepackage{natbib}
+   - \usepackage{float}
+   - \usepackage{blindtext}
+   - \usepackage{changepage}
+   - \usepackage{scrextend}
+   - \usepackage[maxfloats=100]{morefloats}
+   - \usepackage{enumitem}
+   - \usepackage{setspace}
+   - \usepackage{ragged2e} # Deixar o texto justificado
+   - \usepackage{booktabs}
+   - \definecolor{light-gray}{gray}{0.9}
+   - \usepackage{pdfpages}
+   - \usepackage{dsfont}
+   - \usepackage{amssymb,amsmath}
+   - \usepackage{subfigure}
+   - \usepackage{colortbl}
+   - \usepackage{url}
+   - \usepackage{algorithm}
+   - \usepackage{algorithmic}
+   
+
+geometry: margin=1in
+documentclass: article
+fontsize: 12pt
+spacing: double
+#title: "Análise da Consistência dos Indicadores de Qualidade da Informação de Casos por Tuberculose nas Microrregiões do Brasil, 2012 a 2014"
+#author: "Igor André Silva Coelho" 
+---
+
+\begin{titlepage}
+	\begin{center}
+		
+			\begin{minipage}{2cm}
+			\begin{center}
+				\includegraphics[width=1.5cm, height=2.5cm]{Imagens/logo_ufop.eps}
+			\end{center}
+		\end{minipage}
+		\begin{minipage}{11cm}
+			\begin{center}
+								{\small \textsc{Universidade Federal de Ouro Preto}			\\
+							  \textsc{Instituto de Ciências Exatas e Biológicas}						\\
+							  \textsc{Departamento de Estatística}	\\
+							  \textsc{Bacharelado em Estatística}}
+				\end{center}
+		\end{minipage}
+		\begin{minipage}{2cm}
+			\begin{center}
+				\includegraphics[width=2.0cm, height=2.5cm]{Imagens/logo_deest.eps}
+			\end{center}
+		\end{minipage}
+			
+		\vspace{6cm}
+						
+		{\setlength{\baselineskip}
+		{1.5\baselineskip}
+		{\LARGE \textbf{Análise da Consistência dos Indicadores de Qualidade da Informação de Casos por Tuberculose nas Microrregiões do Brasil}}\par}
+			
+		\vspace{4cm}
+			
+		{\large \textbf{Igor André Silva Coelho}}
+						
+		\vspace{5cm}
+		
+		Ouro Preto - MG\\Fevereiro de 2024
+	\end{center}
+\end{titlepage}
+
+
+\pagenumbering{roman}
+ 
+\setlength{\baselineskip}{1.5\baselineskip} 
+\justifying
+\newpage
+
+\begin{center}
+    \textbf{\small {Igor André Silva Coelho}           \\
+    \vspace{2cm}
+    {Análise da Consistência dos Indicadores de Qualidade da Informação de Casos por Tuberculose nas Microrregiões do Brasil}}
+\end{center}
+
+\vspace{2cm}
+
+\justifying{
+\begin{flushright}
+    \begin{tabular}{>{\raggedleft}p{0.7\textwidth}}
+        Monografia de Graduação apresentada ao \\
+        Departamento de Estatística do Instituto de \\
+        Ciências Exatas e Biológicas da Universidade \\
+        Federal de Ouro Preto como requisito parcial \\
+        para a obtenção do grau de bacharel em Es- \\
+        tatística.
+    \end{tabular}
+\end{flushright}
+}
+
+\vspace{1cm}
+
+	
+\begin{center}
+    \small{Orientadora}\\ Profa. Dra. Carolina Silva Pena \\
+    \small{Coorientador}\\ Prof. Dr. Guilherme Lopes de Oliveira\\
+\end{center}
+\vspace{1cm}
+
+\begin{center}
+								{\small {Universidade Federal de Ouro Preto – UFOP}			\\
+							  {Departamento de Estatística – DEEST}}
+\end{center}
+		
+
+\vspace{2cm}	
+\begin{center}
+		Ouro Preto - MG\\Fevereiro de 2024
+\end{center}
+
+
+```{r, echo=FALSE, out.width='\\linewidth'}
+knitr::include_graphics("ficha_catalografica.pdf")
+
+```
+
+
+
+```{r, echo=FALSE, out.width='\\linewidth'}
+knitr::include_graphics("FolhaAprovacao_Igor_assinado.pdf")
+
+```
+
+
+
+
+```{r, echo=FALSE, out.width='\\linewidth'}
+knitr::include_graphics("FolhaAprovacao_Igor_assinado2.pdf")
+
+```
+
+
+<!--
+
+\justifying{
+  Monografia de Graduação sob o título \textit{Análise da Consistência dos Indicadores de
+  Qualidade da Informação de Casos por Tuberculose nas Microrregiões do Brasil} apresenta
+  da por Igor André Silva Coelho e aceita pelo Departamento de Estatística do Instituto de 
+  Ciências Exatas e Biológicas da Universidade Federal de Ouro Preto, sendo aprovada por 
+  todos os membros da banca examinadora abaixo especificada:
+}
+
+\vspace{0.3cm}
+
+\begin{center}
+		\rule{10cm}{0.4pt} \\ % Linha de assinatura
+		Profa. Dra. Carolina Silva Pena\\
+		\small{
+		    Orientadora \\
+				Departamento de Estatística (UFOP)
+		}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{center}
+		\rule{10cm}{0.4pt} \\ % Linha de assinatura
+		Prof. Dr. Guilherme Lopes de Oliveira\\
+		\small{
+		    Coorientador \\
+				Departamento de Computação (CEFET-MG)
+		}
+	
+		
+\end{center}	
+
+\vspace{0.3cm}
+
+\begin{center}
+		\rule{10cm}{0.4pt} \\ % Linha de assinatura
+		Prof. Dr. Eduardo Bearzoti\\
+	 \small{
+				Departamento de Estatística (UFOP)
+		}
+\end{center}	
+\vspace{0.3cm}
+
+\begin{center}
+		\rule{10cm}{0.4pt} \\ % Linha de assinatura
+		Prof. Dr. Rivert Paulo Braga Oliveira\\
+	 \small{
+				Departamento de Estatística (UFOP)
+		}
+\end{center}	
+
+\vspace{0.3cm}	
+\begin{center}
+		Ouro Preto-MG\\Fevereiro de 2024
+\end{center}
+
+
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushright}
+    Homenagem que o autor presta a uma ou mais pessoas.
+\end{flushright}
+
+\newpage
+\begin{center}
+    \textbf{\LARGE Agradecimentos}
+\end{center}
+
+Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elaboração do trabalho, sejam eles pessoas ou mesmo organizações.
+
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushright}
+	\textit
+	{
+		Citação
+	}\medskip\\ 
+	Autor
+\end{flushright}
+-->
+\newpage
+\begin{center}
+	{\Large{\textbf{Análise da Consistência dos Indicadores de Qualidade da Informação de Casos por Tuberculose nas Microrregiões do Brasil}}}
+\end{center}
+
+\vspace{1cm}
+
+\begin{flushright}
+	Autor: Igor André Silva Coelho\\
+	Orientadora: Prof. Dra. Carolina Silva Pena\\
+	Coorientador: Prof. Dr. Guilherme Lopes de Oliveira
+\end{flushright}
+
+\vspace{1cm}
+
+\begin{center}
+	\Large{\textsc{\textbf{Resumo}}}
+\end{center}
+
+\noindent 
+A tuberculose (TB) é uma das doenças infecciosas mais letais globalmente. A não detecção de casos e óbitos por TB é um desafio crucial, contribuindo para a persistência da transmissão, prejudicando o tratamento efetivo e subestimando a gravidade do problema. Este trabalho visa avaliar a consistência de 14 indicadores de qualidade de informação do sistema de vigilância da tuberculose em microrregiões brasileiras entre 2012 e 2014. Para isso, foi empregada a Teoria de Resposta ao Item (TRI), especificamente o modelo de Samejima, para classificar as microrregiões em uma escala de qualidade associada à notificação e registro de casos de tuberculose. A aplicação da TRI mostrou-se uma abordagem inovadora e eficaz na análise da qualidade dos dados. O estudo não permitiu apenas a classificação das microrregiões com base nos escores, mas também proporcionou uma compreensão mais profunda dos padrões e comportamentos dos indicadores selecionados. Os resultados destacam profundas desigualdades geográficas no Brasil e a urgência de investimento em áreas menos favorecidas ou na implementação de estratégias de vigilância diferenciadas. Ressalta-se a necessidade de priorização da região Nordeste, enquanto as microrregiões do Norte requerem um nível médio de priorização. Poucos estudos nacionais abordaram a tuberculose em pequenas áreas, tornando os resultados deste trabalho relevantes para epidemiologistas e gestores de saúde pública. A identificação das microrregiões com desempenho inferior em notificação e registro oferece uma base sólida para intervenções direcionadas. Além disso, as conclusões podem orientar estratégias para capacitação de profissionais de saúde, conscientização da população e realização de estudos visando estimar e reduzir a subnotificação de casos de tuberculose no Brasil. 
+
+\noindent\textit{Palavras-chave}: Tuberculose, Microrregiões - Brasil,  Vigilância eletrônica, Indicadores - Qualidade.
+
+
+\newpage
+\begin{center}
+	{\Large{\textbf{Analisys of the Consistency of the  Information Quality Indicators for Tuberculosis cases in Basil's micro-regions}}}
+\end{center}
+
+\vspace{1cm}
+
+\begin{flushright}
+	Author: Igor André Silva Coelho\\
+	Advisor: Prof. Dra. Carolina Silva Pena\\
+	Co-adviser: Prof. Dr. Guilherme Lopes de Oliveira
+\end{flushright}
+
+\vspace{1cm}
+
+\begin{center}
+	\Large{\textsc{\textbf{Abstract}}}
+\end{center}
+
+\noindent 
+Tuberculosis (TB) is one of the most deadly infectious diseases globally. The underdetection of TB cases and deaths is a crucial challenge, contributing to the persistence of transmission, hindering effective treatment, and underestimating the severity of the problem. This study consist to assess the consistency of 14 information quality indicators from the tuberculosis surveillance system in Brazilian micro-regions from 2012 to 2014. For this purpose, the Item Response Theory (IRT), specifically the Samejima model, was employed to classify micro-regions on a scale of quality associated with the notification and registration of tuberculosis cases. The application of IRT proved to be an innovative and effective approach in analyzing data quality. The study not only allowed the classification of micro-regions based on scores but also provided a deeper understanding of patterns and behaviors of the selected indicators. The results highlight profound geographical inequalities in Brazil, emphasizing the urgency of investing in less privileged areas or implementing differentiated surveillance strategies. The need for prioritizing the Northeast region is emphasized, while micro-regions in the North require a moderate level of prioritization. Few national studies have addressed tuberculosis at small-area levels, making the results of this work relevant to epidemiologists and public health managers. Identifying micro-regions with inferior performance in notification and registration provides a solid foundation for targeted interventions. Additionally, the findings can guide strategies for health professional training, public awareness, and studies aiming to estimate and reduce the underreporting of tuberculosis cases in Brazil.
+
+\noindent\textit{Keywords}: Tuberculosis, Brazil's Micro-Regions, Eletronic Surveillance, Quality Indicators.
+
+
+
+
+```{r setup, echo = FALSE, fig.keep = 'high', results = 'hide', message = FALSE, fig.pos = 'H', fig.align = 'center', out.extra = '', warning=FALSE, error = FALSE}
+
+rm(list=ls(all=T))
+if(!require("knitr")){install.packages("knitr"); dependencies=TRUE}
+if(!require("kableExtra")){install.packages("kableExtra"); dependencies=TRUE}
+if(!require("sp")){install.packages("sp"); dependencies=TRUE}
+#if(!require("maptools")){install.packages("maptools"); dependencies=TRUE}
+if(!require("RColorBrewer")){install.packages("RColorBrewer"); dependencies=TRUE}
+if(!require("classInt")){install.packages("classInt"); dependencies=TRUE}
+if(!require("xtable")){install.packages("xtable"); dependencies=TRUE}
+if(!require("ggplot2")){install.packages("ggplot2"); dependencies=TRUE}
+if(!require("reshape2")){install.packages("reshape2"); dependencies=TRUE}
+if(!require("ggalt")){install.packages("ggalt"); dependencies=TRUE}
+if(!require("ggfortify")){install.packages("ggfortify"); dependencies=TRUE}
+if(!require("psych")){install.packages("psych"); dependencies=TRUE}
+if(!require("mirt")){install.packages("mirt"); dependencies=TRUE}
+if(!require("dplyr")){install.packages("dplyr"); dependencies=TRUE}
+if(!require("stringi")){install.packages("stringi"); dependencies=TRUE}
+if(!require("stringr")){install.packages("stringr"); dependencies=TRUE}
+if(!require("directlabels")){install.packages("directlabels"); dependencies=TRUE}
+if(!require("gridExtra")){install.packages("gridExtra"); dependencies=TRUE}
+library(rvest)
+library(stringr)
+library(e1071) 
+if(!require("ggpubr")){install.packages("ggpubr"); dependencies=TRUE}
+if(!require("randomcoloR")){install.packages("randomcoloR"); dependencies=TRUE}
+library(corrplot)
+if(!require("reticulate")){install.packages("reticulate"); dependencies=TRUE}
+require(maps)
+require(geobr)
+library(ggpubr)
+library(randomcoloR)
+if(!require("readxl")){install.packages("readxl"); dependencies=TRUE}
+require("matrixStats")
+
+
+knitr::opts_chunk$set(echo = FALSE, fig.keep = 'high', results = 'hide', message = FALSE, fig.pos = 'H', fig.align = 'center', out.extra = '', warning=FALSE, error = FALSE)
+options(knitr.table.format = "latex")
+options(OutDec = ",", digits = 2)
+
+set.seed(1000)
+
+
+```
+
+ \newpage
+ 
+\centering 
+\newpage
+\tableofcontents
+
+\newpage
+\listoftables
+
+\newpage
+\listoffigures
+
+\newpage
+\raggedright
+
+
+\justifying
+\setlength\parindent{20pt}
+\newpage
+ 
+\pagenumbering{arabic}
+
+# Intodução
+
+  A tuberculose é uma das doenças infecciosas mais mortais do mundo, com taxas alarmantes de incidência e mortalidade. De acordo com estudos da Organização Mundial da Saúde (OMS), em 2017, foram registrados 10 milhões de casos novos e 1,3 milhão de óbitos em todo o planeta (World Health Organization, 2018 \cite{WHO2018}). No Brasil, a situação relacionada à tuberculose é uma fonte de preocupação. De acordo com registros do Ministério da Saúde, em 2016, 4.426 óbitos foram atribuídos a essa doença, resultando em uma taxa de mortalidade de 2,1 óbitos por 100 mil habitantes. No ano seguinte, em 2017, houve a notificação de 69.596 novos casos de tuberculose, o que gerou uma taxa de incidência de 33,5 casos por 100 mil habitantes (Ministério da Saúde do Brasil, 2019 \cite{MSB2019}).
+
+  Segundo a OMS, a subnotificação de casos de tuberculose é um problema significativo em todo o  mundo (World Health Organization, 2012 \cite{WHO2012}). Estima-se que cerca de 3,6 milhões de casos não são notificados pelos sistemas de vigilância da tuberculose, resultando em falhas na vigilância epidemiológica e no direcionamento de recursos para o combate à doença. No Brasil, apesar de o Sistema de Informações de Agravos de Notificações (SINAN) ser uma ferramenta importante para auxiliar em ações de controle de doenças infecciosas, estima-se que a proporção de casos de tuberculose notificados no país em 2017 tenha atingido apenas 87% do total (World Health Organization, 2017 \cite{WHO2017}). Além disso, enfrentamos desafios significativos na melhoria da notificação de casos no país (Ministério da Saúde do Brasil, 2019 \cite{MSB2019}). A alta rotatividade dos profissionais de saúde e a demora para o atendimento nos serviços de saúde são fatores que impactam diretamente na identificação e notificação adequada dos casos de tuberculose (Oliveira GP,et al., 2010 \cite{OLV2010}).
+
+
+  Além das questões de subnotificação, é relevante salientar a escassez de estudos atualizados e de abrangência subnacional a respeito da tuberculose no Brasil (Santos, M.L, et al., 2018 \cite{SML2018}). Tais metodologias apresentam limitações ao não permitirem uma mensuração precisa do número real de casos e, consequentemente, estão sujeitas a subnotificações. Apenas um estudo realizado por Stoner et al. (2019) \cite{Stoner2019} buscou corrigir a subnotificação de casos de tuberculose em nível subnacional para o período de 2012 a 2014.
+
+ Diante da carência de estudos abrangentes sobre a subnotificação de mortes e casos de tuberculose em nível subnacional, ou seja, focada nas microrregiões, esse trabalho teve como objetivo avaliar a qualidade dos dados registrados no SINAN e no Sistema de Informações de Mortalidade (SIM) nas microrregiões do Brasil de 2012 a 2014. O período selecionado permitiu uma análise consistente e comparável dos dados ao longo de três anos, proporcionando uma visão mais abrangente da situação da tuberculose no país, possibilitando também a aplicação em dados mais recentes em estudos futuros. Além disso, a escolha de microrregiões como unidade de análise permitiu uma avaliação mais detalhada da subnotificação em nível local.
+
+  Este estudo aplicou a Teoria de Resposta ao Item (TRI), mais especificamente o modelo de Samejima (Ronald K., 1991 \cite{FRT91}), para classificar as microrregiões em uma escala de
+qualidade relacionada à notificação e registro de casos de  tuberculose. O uso dessa abordagem permitiu identificar e construir padrões de subnotificação e qualidade dos dados em diferentes regiões do Brasil. Os resultados obtidos forneceram informações valiosas para o planejamento de
+intervenções e o aprimoramento das estratégias de combate à tuberculose em nível local. Até o presente momento, não encontrou-se registros de outros estudos que tenham utilizado a Teoria de Resposta ao Item para avaliar a qualidade da informação referente aos casos de tuberculose.
+
+\newpage
+
+#  Base de dados
+
+ 
+  A base de dados para este estudo foi extraída do Sistema de Informação de Agravos de Notificação (SINAN). Os dados estão disponíveis publicamente por meio da plataforma DATASUS \url{(http://www2.datasus.gov.br/DATASUS)}, uma fonte confiável que fornece informações cruciais sobre a incidência de doenças, sendo fundamental para análises epidemiológicas.
+
+  A coleta e o processamento dos dados foram conduzidos de maneira a preservar a privacidade e confidencialidade. Foram coletados dados individualizados e desidentificados referentes a diferentes anos, os quais foram cuidadosamente agrupados e manipulados de acordo com protocolos estabelecidos para criar a base de dados final.
+
+  É crucial destacar que os indicadores utilizados não são simples resultados diretos dos dados originais. Em vez disso, foram obtidos por meio de um processo criterioso de manipulação. Esse procedimento seguiu um script desenvolvido pelos próprios autores, inspirado e adaptado com base na literatura de Silva et al. (2017) \cite{SilvaGDM2017}, garantindo consistência e precisão na extração de informações relevantes. O detalhamento desses indicadores, juntamente com as abreviaturas usadas ao longo do texto para referir-se a cada um deles, pode ser encontrado na Tabela \ref{tab:tabela_original}.
+
+  A primeira etapa deste trabalho envolveu a seleção cuidadosa desses indicadores, conforme as diretrizes estabelecidas na literatura de Silva et al. (2017) \cite{SilvaGDM2017}. Foram identificados 14 indicadores considerados essenciais para a avaliação da vigilância da tuberculose. A Tabela \ref{tab:tabela_original} apresenta uma descrição detalhada desses indicadores, juntamente com as abreviaturas que serão utilizadas ao longo do texto para referir-se a cada um deles.
+
+\newpage
+
+```{r tabela_original, results='asis'}
+Indicador <- c(rep("Completitude", 5), rep("Consistência", 1), rep("Oportunidade", 4), rep("Aceitabilidade", 4))
+
+Componentes <- c("Data do início do tratamento", " Número de contatos examinados", "Situação de encerramento", "Baciloscopia no 2º mês", "Baciloscopia no 6º mês", " Data da notificação maior ou igual a data do diagnóstico", "Oportunidade de notificação", "Oportunidade de digitação","Oportunidade de tratamento","Oportunidade de encerramento", "Contatos examinados entre os identificados","Casos novos pulmonares que realizaram baciloscopia", "Casos pulmonares sem abandono", "Teste para HIV")
+
+Descricao <- c("Proporção (%) de casos com preenchimento da data do início do tratamento","Proporção (%) de casos com preenchimento do número de contatos examinados","Proporção (%) de casos com preenchimento da situação de encerramento","Proporção (%) de casos com preenchimento sobre a realização (ou não) de baciloscopia no 2º mês","Proporção (%) de casos com preenchimento sobre a realização (ou não) de baciloscopia no 6º mês","Proporção (%) de casos com data de notificação maior ou igual à data do diagnóstico","Proporção de casos com intervalo entre a data de notificação e diagnóstico inferior ou igual a 7 dias","Proporção de casos com intervalo entre a data de digitação e notificação inferior ou igual a 30 dias","Proporção (%) de casos com intervalo entre a data de início do tratamento e diagnóstico inferior a 1 dia","Proporção (%) de casos notificados entre 2012 e 2014 não resistentes com intervalo entre a data do encerramento e início do tratamento entre 180 e 270 dias","Proporção (%) de contatos de casos examinados entre os identificados, para os casos que possuem informação sobre contatos examinados e identificados.","Proporção (%) de casos novos de tuberculose pulmonar que realizaram baciloscopia de escarro", "Proporção (%) de casos de tuberculose pulmonar que não tiveram abandono primário ou abando do tratamento","Proporção (%) de casos testados para HIV (exclui HIV em andamento do numerador)")
+
+Variavel = c("DTITR", "ConEx", "SitEnc","Bac22","Bac62","Consistencia2","Not","Dig", "Trat", "Enc2","Contato", "Bac","Abandono2","HIV")
+
+# Crie um data frame com seus dados
+tab <- data.frame(Componentes = Componentes, 
+                    Descricao = Descricao, Variavel = Variavel)
+
+# Use a função kable para criar a tabela
+kable(tab, format = "latex", booktabs = TRUE, longtable = T, 
+                col.names = c("Componentes", "Descrição", "Variável"),
+                caption = "Indicadores escolhidos pelos especialistas para análise do sistema de vigilância epidemiológica da tuberculose nas microrregiões do Brasil de 2012 a 2014.",
+                align = "c", digits = 1) %>%
+                kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)") %>%
+                column_spec(1, width = "5cm") %>% 
+                column_spec(2, width = "7cm") %>% 
+                column_spec(3, width = "2cm") %>%
+  row_spec(row=0, bold=TRUE)
+  
+
+```
+
+Para melhor compreender e comparar os resultados dos indicadores, optamos por categorizá-los adotando faixas recomendadas nas literaturas (Braga JU., 2007 \cite{BragaJU01_03}, Ministério da Saúde do Brasil, 2010 \cite{MBS2010}, Ministério da Saúde do Brasil, 2011 \cite{MBS2011},  Ministério da Saúde do Brasil, 2017 \cite{MSB2017}, Oliveira PB, 2010 \cite{Oliveira_PB2010}). Essa decisão tornou os dados adequados para a aplicação do modelo de Samejima (Ronald K., 1991 \cite{FRT91}), dentro do arcabouço teórico da Teoria de Resposta ao Item. A Tabela \ref{tab:tab_intro} mostra as faixas adotadas na construção de quatro categorias, sendo que a Categoria 1 indica a pior qualidade da informação e a Categoria 4 a melhor qualidade. 
+
+
+
+```{r tab_intro, results='asis'}
+
+# Dados da tabela
+Variavel <- c("Categoria 1", "Categoria 2", "Categoria 3", "Categoria 4")
+Intervalos <- c("Microrregiões que apresentaram até 15% dos registros preenchidos.","Microrregiões que tiveram mais de 15% e até 70% registros preenchidos.", "Microrregiões com registros que tiveram mais de 70% e até 90%.","Microrregiões que alcançaram 90% ou mais de preenchimento.")
+
+# Criar a tabela
+tabela_intervalos <- data.frame(Variavel, Intervalos)
+
+# Ajustar a largura das colunas
+col_widths <- c(15, 25)
+
+kable(tabela_intervalos, longtable = T, booktabs = T, align = "c", linesep = "",caption = " Categorias adotadas" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+```
+
+Destaca-se que a pesquisa teve como unidade de análise 557 microrregiões, que incluem os 5.570 municípios do Brasil. Para garantir a abrangência completa, consideramos todos os casos de tuberculose notificados. A Tabela \ref{tab:tabela_porcentagem} mostra o número de microrregiões classificada em cada categoria. 
+
+
+```{r tabela_porcentagem, results='asis'}
+
+Componentes <- c("Data do início do tratamento", " Número de contatos examinados", "Situação de encerramento", "Baciloscopia no 2º mês", "Baciloscopia no 6º mês", " Data da notificação maior ou igual a data do diagnóstico", "Oportunidade de notificação", "Oportunidade de digitação","Oportunidade de tratamento","Oportunidade de encerramento", "Contatos examinados entre os identificados","Casos novos pulmonares que realizaram baciloscopia", "Casos pulmonares sem abandono", "Teste para HIV")
+
+Categoria_1 <- c("0", "1", "0", "3 (1%)", "2", "0", "0", "0", "33 (6%)", "0", "1", "0", "0", "3 (1%)")
+
+Categoria_2 <- c("3 (1%)", "145 (26%)", "6 (1%)", "78 (14%)", "115 (21%)", "0", "140 (25%)", "131 (24%)", "434 (78%)", "465 (83%)", "52 (9%)", "25 (4%)", "18 (3%)", "307 (55%)")
+
+Categoria_3 <- c("34 (6%)", "212 (38%)", "66 (12%)", "194 (35%)", "251 (45%)", "11 (2%)", "356 (64%)", "330 (59%)", "80 (14%)", "89 (16%)", "229 (41%)", "285 (51%)", "299 (54%)", "168 (30%)")
+
+Categoria_4 <- c("520 (93%)", "199 (36%)", "485 (87%)", "282 (51%)", "189 (34%)", "546 (98%)", "61 (11%)", "96 (17%)", "10 (2%)", "3 (1%)", "275 (49%)", "247 (44%)", "240 (43%)", "79 (14%)")
+
+# Crie um data frame com seus dados
+tab <- data.frame(Componentes = Componentes, 
+                    Categoria_1 = Categoria_1, Categoria_2 = Categoria_2,
+                  Categoria_3 = Categoria_3, Categoria_4 = Categoria_4)
+
+# Use a função kable para criar a tabela
+kable(tab, format = "latex", booktabs = TRUE, longtable = T, 
+                col.names = c("Componentes", "Categoria 1", "Categoria 2","Categoria 3",
+                              "Categoria 4"),
+                caption = "Número (e proporção) de microrregiões em cada categoria",
+                align = "c", digits = 1) %>%
+                kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)") %>%
+                column_spec(1, width = "5cm") %>% 
+  row_spec(row=0, bold=TRUE)
+  
+
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message = FALSE, error = FALSE}
+# Diretório Carolina:
+#setwd("G:\\Meu Drive\\Orientacoes\\Igor\\Base de Dados")
+#bd <- read.csv('G:\\Meu Drive\\Orientacoes\\Igor\\Base de Dados\\dadosGabriela2012_2014_categ.csv', encoding = "latin1")
+#  # # # #
+#agrup_reg<- read_excel("G:\\Meu Drive\\Orientacoes\\Igor\\Base de Dados\\Relatorio Microrregioes.xls")
+
+#=============================================================================================
+# # Diretório Igor:
+setwd("C:/Users/milto/Desktop/TCC")
+bd <- read.csv('C:/Users/milto/Desktop/TCC/dadosGabriela2012_2014_categ.csv')
+
+agrup_reg <- read_excel("C:/Users/milto/Desktop/Material das disciplinas/Icientífica/Relatorio Microrregioes.xls")
+#=============================================================================================
+colnames(bd) <- gsub("class_Consistencia", "Consistencia2", colnames(bd))
+
+# Retirando "class_"
+colnames(bd) <- gsub("class_", "", colnames(bd))
+
+dados1=read_micro_region(showProgress = FALSE)
+
+#=============================================================================================
+segundo <- dplyr::select(agrup_reg, COD_Microrregiao_Geografica, Nome_UF)
+dados_sem_duplicatas <- distinct(segundo)
+
+#Excluindo microrregiao divergente:
+dadosMICRO_UF=dados_sem_duplicatas %>% 
+  filter(COD_Microrregiao_Geografica != 26019)
+
+dados_agrupados <- merge(x = bd, y = dadosMICRO_UF, by.x = "COD_MICRO", by.y = "COD_Microrregiao_Geografica", all.x = TRUE)
+
+#---------------------------------------------------------------------------------------------
+# Criar uma nova coluna "regiao" no dataframe "df"
+dados_agrupados <- dados_agrupados %>%
+  mutate(regiao = case_when(
+    Nome_UF %in% c("Acre", "Amapa", "Amazonas", "Para", "Rondonia", "Roraima", "Tocantins") ~ "Norte",
+    Nome_UF %in% c("Alagoas", "Bahia", "Ceara", "Maranhao", "Paraiba", "Pernambuco", "Piaui", "Rio_Grande_do_Norte", "Sergipe") ~ "Nordeste",
+    Nome_UF %in% c("Distrito_Federal", "Goias", "Mato_Grosso", "Mato_Grosso_do_Sul") ~ "Centro-Oeste",
+    Nome_UF %in% c("Espirito_Santo", "Minas_Gerais", "Rio_de_Janeiro", "Sao_Paulo") ~ "Sudeste",
+    Nome_UF %in% c("Parana", "Rio_Grande_do_Sul", "Santa_Catarina") ~ "Sul",
+    TRUE ~ NA_character_  # Considerar outros casos como NA
+  ))
+
+```
+
+
+
+```{r echo=FALSE, eval = F}
+
+amostra = head(bd)
+
+kable(amostra,caption = "Tabela 2: Amostra das primeiras observações do conjunto de dados", align = "l", col_widths = col_widths)
+
+```
+
+\newpage
+
+# Metodologia 
+
+  A metodologia adotada neste estudo teve como foco a análise da qualidade dos dados registrados no Sistema de Informação de Agravos de Notificação (SINAN) e no Sistema de Informações de Mortalidade (SIM) nas microrregiões do Brasil durante o período de 2012 a 2014. A abordagem quantitativa utilizou uma amostra representativa de dados provenientes de fontes oficiais de saúde. A análise foi conduzida por meio de métodos estatísticos, incluindo análise fatorial, correlação policórica e outras técnicas específicas para avaliar a confiabilidade e a validade dos dados coletados.
+
+  O estudo foi estruturado em várias etapas, começando pela seleção criteriosa dos indicadores mais relevantes para a vigilância epidemiológica da tuberculose. Posteriormente, a análise dos dados foi realizada em etapas sequenciais, incluindo a identificação de correlações entre os indicadores e a exclusão progressiva daqueles com menor correlação e contribuição para o modelo.
+
+## Matriz de Correlação Policórica
+  
+  A matriz de correlação policórica é uma ferramenta importante na análise estatística e psicométrica, frequentemente aplicada para investigar a relação entre variáveis politômicas, ou seja, variáveis que envolvem categorias ordenadas ou ordinais. Essa técnica desempenha um papel fundamental em estudos que visam compreender a associação entre indicadores ou itens de um teste e a habilidade latente subjacente, muitas vezes utilizada em contextos de avaliação psicométrica, epidemiologia, educação e outros campos de pesquisa.
+  
+  A principal motivação para a utilização da matriz de correlação policórica é a capacidade de analisar variáveis categorizadas em diferentes categorias ou grupos de desempenho. A interpretação dos resultados obtidos a partir dessa análise contribui significativamente para a validação e aprimoramento de modelos estatísticos e teóricos.
+  
+  A correlação policórica  atribui valores em uma escala que varia de -1 a 1, sendo um reflexo da relação entre esses itens. Quando a correlação é negativa, isso indica que os resultados dos dois itens tendem a divergir. Quando o valor dessa métrica se aproxima de zero, isso sugere a inexistência de correlação entre os dois itens. Por outro lado, valores positivos indicam uma tendência de concordância nos resultados dos dois itens. O coeficiente de correlação policórica é usualmente estimado pelo método de máxima verossimilhança utilizando procedimentos numéricos. Para maiores detalhes ver Drasgow (2006) \cite{DRASGOW2006}.
+  
+  
+
+## Análise Fatorial
+
+  A análise fatorial é construída a partir da matriz de correlações policóricas e tem como objetivo avaliar quantos fatores subjacentes relevantes estão influenciando nos indicadores analisados. A soma de todos os autovalores é equivalente ao número de variáveis no conjunto de dados.
+
+  Na tabela de Análise Fatorial, cada célula representa um coeficiente de correlação, indicando o grau de associação entre um indicador específico e os fatores extraídos durante a análise fatorial. Esses coeficientes de carga expressam a força da relação entre cada indicador e os fatores considerados na análise. 
+
+ O ideal é que a análise fatorial indique a presença de um único fator, representando a qualidade dos sistemas de registro dos dados nas microrregiões. A presença de múltiplos fatores indica que diversas variáveis podem estar influenciando os resultados observados. Para determinar o número de fatores atuantes, geralmete adota-se os seguintes critérios:
+
+
+1. \textbf{Critério 1:}
+Analisamos a proporção da variância total relacionada por cada autovalor da matriz. Retemos os autovalores que representam os maiores valores da variância total. Portanto, o número de fatores subjacentes é igual à quantidade de autovalores retidos.
+
+2. \textbf{Critério 2:}
+O número de fatores subjacentes é igual ao número de autovalores da matriz de correlação policórica maiores ou iguais a 1, conhecido como critério de Kaiser.
+
+  Neste trabalho foi adotado o critério 2, ou seja, o critério de Kaiser, para determinar o número de fatores subjacentes. Na presença de dois ou mais fatores, a análise fatorial permite identificar com qual fator cada indicador está mais fortemente relacionado. A divisão dos indicadores em grupos é importante pois permite a seleção daqueles que estão mais fortemente relacionados ao primeiro fator. Maiores informações podem ser encontradas em Mingoti, S.A. (2007) \cite{Mingoti2007}.
+
+### Autovalores
+
+  Para calcular os autovalores de uma matriz \textbf{A}, é preciso resolver a
+seguinte equação característica:
+
+\begin{align}
+\det(\mathbf{A} - \lambda \mathbf{I} ) = 0
+\end{align}
+
+em que: 
+
+- $\textbf{A}$ representa a matriz de correlaçoes policóricas no contexto desse estudo;
+
+- $\mathbf{\lambda}$ é o autovalor;
+
+- $\textbf{I}$ é a matriz identidade.
+
+
+Após determinar quantos fatores subjacentes são relevantes, é possível identificar qual desses fatores está mais fortemente ligado a cada indicador. Essa análise permite agrupar os indicadores de acordo com o fator ao qual estão mais relacionados. Maiores informações podem ser encontradas em Mingoti, S.A. (2007) \cite{Mingoti2007}.
+
+
+## Alfa de Cronbach
+
+  O coeficiente alfa de Cronbach é utilizado para avaliar a consistência interna de um conjunto de indicadores que medem uma característica comum. Ele calcula o quão bem esses indicadores estão correlacionados entre si, oferecendo uma medida da confiabilidade dos dados. Este coeficiente varia de 0 a 1, e quanto mais próximo de 1, maior é a confiabilidade dos dados.
+
+  O principal propósito do coeficiente alfa de Cronbach é determinar se os indicadores estão consistentes entre si na avaliação de uma característica específica. Uma interpretação útil do coeficiente alfa de Cronbach envolve a exclusão de um indicador específico da análise. Se a remoção de um indicador não resultar em uma redução significativa no valor do coeficiente alfa de Cronbach, isso sugere que esse indicador não contribui de maneira substancial para a consistência interna da avaliação. Em outras palavras, a análise continua sendo confiável mesmo sem esse indicador em particular.
+
+A fórmula para o cálculo do coeficiente alfa de Cronbach pode ser encontrada em Cronbach, LJ. (1951) \cite{CRB1951}.
+
+
+  
+\begin{align}
+\alpha = \frac{k}{k - 1} \left(1 - \frac{\sum_{i=1}^{k} \sigma_i^2}{\sigma_T^2}\right)
+\end{align}
+
+em que: 
+
+- $\textbf{K}$ é o número de indicadores presentes na análise;
+
+- $\mathbf{\sigma^2_i}$ é a variância de cada item;
+
+- $\mathbf{\sigma^2_T}$ é a variância total da escala.
+
+\newpage
+
+## O modelo de Samejima
+
+ Desenvolvido por Samejima (1969) \cite{Samejima_69}, o modelo de Samejima é uma extensão do modelo de resposta ao item proposto por Frederic Lord e é especialmente adequado para medir habilidades latentes. O modelo parte do pressuposto de que as as categorias de resposta de cada item podem ser ordenadas entre si e é considerado de natureza um item politômico. Os itens de natureza politômica possuem características específicas os quais são dependentes da categorização das respostas de forma ordenável. Para as categorias não ordenáveis o modelo recebe o nome de Normal e a partir do momento que se tem as categorias odenadas passa a ser identificado como modelo Ordinal. 
+
+  O modelo de Samejima consiste em estimar os parâmetros do item de dificuldade e discriminação e a habilidade latente das microrregiões, a partir das respostas observadas. A comparação entre as respostas observadas e as respostas esperadas nas pontuações permite calcular a probabilidade de qualidade dos dados em cada microrregião.
+
+  Suponhamos que as pontuações das categorias de um item \(i\) sejam organizadas em ordem crescente, representadas po \(k = 0, 1, \ldots, m_i\), onde \(m_i + 1\) é o número total de categorias para o item \(i\). A chance de uma microrregião ser atribuída a uma categoria específica ou a uma categoria mais alta do item \(i\) pode ser expressa através de uma ampliação do modelo logístico com 2 parâmetros.
+
+
+\begin{align}
+P_{i,k}^+(\theta_j) = \frac{1}{1 + e^{-D_{a_i}(\theta_j - b_{i,k})}} \quad \text{para } i=1,2,\ldots,I, j = 1, 2, \ldots, n, \text{ e } k=0,1,\ldots,m_i
+\end{align}
+
+
+Onde:
+
+- $P_{i,k}^+(\theta_j)$ é a probabilidade de uma microrregião \(j\) ser alocada em uma categoria \(k\) ou superior do item \(i\);
+
+- $b_{i,k}$ é o parâmetro de dificuldade da \(k\)-ésima categoria do item \(i\);
+
+- $\theta_j$ representa a habilidade ou proficiência latente da microrregião \(j\);
+
+- $a_i$ é o parâmetro de discriminação (ou inclinação) do item \(i\), associado à inclinação da Curva Característica do Item (CCI);
+
+- $D$ é um fator de escala constante igual a 1. Para simular uma função ogiva normal, é comum utilizar o valor 1,702.
+
+
+O parâmetro de discriminação varia para cada item específico, mas permanece constante dentro dos diferentes níveis de categorias dentro de um mesmo item. Essa restrição de igualdade na inclinação de cada categoria tem como propósito evitar a ocorrência de probabilidades negativas. Para o parâmetro de dificuldade \(b_{i,k}\), por definição, é necessário que:
+
+\[ b_{i,1} \leq b_{i,2} \leq \ldots \leq b_{i,mi}, \]
+
+\noindent ou seja, os níveis de dificuldade das categorias de um dado item devem ser ordenados de acordo com a classificação de seus escores, sem perda de generalidade.
+
+A probabilidade de uma microrregião \(j\) receber um escore \(k\) no item \(i\) é então dada pela expressão:
+
+\[ P_{i,k}(\theta_j) = P_{i,k}^+(\theta_j) - P_{i,k+1}^+(\theta_j). \]
+
+Samejima também define \(P_{i,0}^+(\theta_j)\) e \(P_{i,mi+1}^+(\theta_j)\) de modo que:
+
+\[ P_{i,0}^+(\theta_j) = 1 \]
+
+e
+
+\[ P_{i,mi+1}^+(\theta_j) = 0. \]
+
+Portanto,
+
+\[ P_{i,0}(\theta_j) = P_{i,0}^+(\theta_j) - P_{i,1}^+(\theta_j) = 1 - P_{i,1}^+(\theta_j) \]
+
+e
+
+\[ P_{i,mi}(\theta_j) = P_{i,mi}^+(\theta_j) - P_{i,mi+1}^+(\theta_j) = P_{i,mi}^+(\theta_j). \]
+
+Então, temos que:
+
+\[ P_{i,k}(\theta_j) = \frac{1}{1 + e^{-Da_{i}(\theta_j-b_{i,k})}} - \frac{1}{1 + e^{-Da_{i}(\theta_j-b_{i,k+1})}} \]
+
+
+Ao analisar um item com \( (m_i + 1) \)  categorias,  é necessário calcular \( m_i \) valores de dificuldade, juntamente com o parâmetro de discriminação associado ao item. Consequentemente, para cada item no teste, a contagem de parâmetros a serem avaliados dependerá do número de categorias de resposta associadas a ele. Como exemplo, considerando um teste composto por \( I \) itens, cada um apresentando \( (m_i+1) \) categorias de resposta, o total de parâmetros de item a serem calculados será \( \sum_{i=1}^{I} m_i + I \).
+
+### Interpretação 
+
+A Figura \ref{fig:figcci} ilustra um exemplo da Curva Característica do Item (CCI) para o modelo de Samejima. Cada curva representa a probabilidade de uma microrregião com habilidade $\theta$ pertencer à categoria $Q_k$ do item. A habilidade $\theta$, no contexto desse trabalho, representa a capacidade de uma microrregião executar de forma eficaz registros no sistema de vigilância da tuberculose. É importante ressaltar que a escala da habilidade varia conforme uma distribuição Normal padrão ($N(0,1)$). Dessa forma, uma microrregião que apresentar habilidade $\theta$ igual a zero, terá uma capacidade de registro considerada média. Se a capacidade de registro for igual a -2, por exemplo, significa que ele estará no percentil 5,4% da capacidade mais baixa de registro e assim, sucessivamente, seguindo os percentis associados aos valores da distribuição Normal padrão. Já as categorias dos itens referem-se ao percentual de registros preenchidos pela microrregião, sendo que a categoria 1 é o menor nível de preenchimento e a categoria 4 representa o maior nível de preenchimento, conforme descrito na Tabela \ref{tab:tab_intro}. 
+
+No exemplo apresentado, observe que uma microrregião com habilidade $\theta$ igual a -2 tem uma probabilidade próxima de 1 de pertencer à categoria $Q_2$ do item. Isso significa que uma microrregião com habilidade -2 (ou seja, uma capacidade considerada muito baixa de efetuar registros no sistema de vigilância da tuberculose), tem uma probabilidade alta de se enquadrar na categora $Q_2$ desse item. A categoria $Q_2$ indica um percentual entre 15% e 70% de preenchimento do item (ver Tabela \ref{tab:tab_intro}).
+  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{cci.png}
+    \caption{Representação gráfica da CCI do Modelo de Resposta Gradual.}
+    \label{fig:figcci}
+\end{figure}
+
+
+### Função de Informação do Item
+
+
+  A função de informação é um conceito utilizado na seleção de itens para um teste. Itens com uma função de informação mais elevada são preferidos, pois têm maior capacidade de distinguir entre microrregiões que possuem diferentes níveis de habilidade. Ao incluir uma variedade de itens com distintos níveis de dificuldade e capacidade de diferenciação, é possível obter uma avaliação mais precisa das habilidades dos microrregiões.
+  
+A função de informação para um item específico $i$ é dada pela fórmula:
+
+\begin{align}
+I_i(\theta) = P'_i(\theta)^2 \cdot P_i(\theta)(1 - P_i(\theta))
+\end{align}
+
+onde $P'_i(\theta)$ denota a primeira derivada de $P_i(\theta)$.
+
+Para o modelo de Samejima a função de informação aplicada a cada categoria $k$ do item i é dada por: 
+
+$$I_{i,k}(\theta) = D^2 a_{i}^{2}P_{i,k}(\theta)(1-P_{i,k}(\theta))$$
+
+Note que quanto maior o valor do parâmetro de discriminação $a_i$, maior é a função de Informação do Item ($I_{i,k}(\theta)$).
+
+A informação contida em um item \(i\) é calculada somando as contribuições individuais de informação de cada categoria de resposta $k$, multiplicadas pelas respectivas probabilidades de escolha. Assim, a função de informação do item é a soma das contribuições ponderadas das informações associadas a cada categoria de resposta.
+
+
+\begin{align}
+I_i(\theta) = \sum_{k=1}^{m_i} I_{i,k}(\theta) P_{i,k}(\theta)
+\end{align}
+
+
+onde:
+
+- \(I_{ik}(\theta)\) é uma medida de informação da k-ésima categoria de resposta do item \(i\).
+- \(P_{ik}(\theta)\) é a probabilidade da k-ésima categoria de resposta do item \(i\) ser escolhida.
+
+
+
+
+### Função de Informação do Teste
+
+A função de informação do teste é usada para comparar diferentes versões de um teste ou avaliação. Testes com maior função de informação fornecem resultados mais precisos e confiáveis. A função de informação do teste, denotada por \( I(\theta) \), é dada por:
+
+\begin{align}
+I(\theta) = \sum_{i} I_i(\theta)
+\end{align}
+
+\noindent Ou seja, a informação fornecida pelo teste no ponto \( \theta \) é simplesmente a soma das funções de informação dos itens que compõem o teste no ponto \( \theta \).  
+
+A Figura \ref{fig:figit} mosta um exemplo de Curva de Informação do Teste. Note que quando $\theta = -1$, $I(\theta)$ fica próximo de 0,5. 
+
+  
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{cit.png}
+    \caption{Representação gráfica da Curva de Informação do Teste.}
+    \label{fig:figit}
+\end{figure}
+
+
+
+#  Resultados
+
+## Análise da correlação e seleção dos indicadores
+
+  Neste estudo, realizamos uma categorização dos indicadores seguida da análise da matriz de correlação policórica entre eles. Ao explorar a Figura \ref{fig:selecao1}, emergem padrões reveladores de associação entre os indicadores. Correlações próximas a +1 indicam uma forte relação positiva, sugerindo que o aumento em um indicador coincide com o aumento no outro; por exemplo, observar preenchimento em um item sugere preenchimento no outro. Quanto mais próximo de +1, maior o número de casos de concordância observados na base de dados. Em contraste, valores próximos de -1 indicam uma relação negativa, onde o aumento em um indicador está associado à diminuição no outro; por exemplo, preenchimento em um item sugere não preenhcimento no outro, e vice-versa. Quanto mais próximo de -1, maior o número de casos de discordância observados na base de dados. Já correlações próximas a zero indicam ausência de correlação entre os indicadores.
+
+
+```{r selecao1, echo=FALSE, warning=FALSE, fig.height= 7, fig.width= 7,  message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+df = subset(bd, select= c(`DTITR`: `HIV`))
+
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 11, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+ 
+```
+
+
+  Na análise primária todos os 14 indicadores selecionados pelos especialistas foram utilizados para avaliar o sistema de vigilância epidemiológica da tuberculose nas microrregiões do Brasil. No entanto, ao extrair os autovalores da matriz de correlação policórica com o intuito de verificar a unidimensionalidade dos dados, verificou-se que o primeiro autovalor da matriz explicava apenas 36% da variabilidade dos dados. Essa proporção indicava que um único fator subjacente não era suficiente para representar a complexidade das informações contidas nos indicadores.
+
+  Neste contexto, observou-se que outros autovalores também continham informações relevantes. O segundo autovalor, por exemplo, explicava 12% da variabilidade, o terceiro autovalor representava 11%, o quarto autovalor continha 9%, e o quinto autovalor apresentava 7% da variabilidade. Essa distribuição da variância entre os autovalores sugere que mais de um fator subjacente pode estar influenciando os resultados dos indicadores. Essas informações podem ser visualizadas na Figura \ref{fig:GRAFICO_1}.
+
+  Essa descoberta ressalta a necessidade de se explorar mais profundamente a estrutura subjacente dos dados e de considerar a presença de múltiplos fatores subjacentes ao se avaliar a qualidade dos registros de tuberculose nas microrregiões do Brasil. 
+
+```{r GRAFICO_1, fig.height= 4.5, fig.with = 6,  echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica dos 14 indicadores."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+\newpage
+
+  Conforme mencionado anteriromete foi adotado o critério de Kaiser para estabelecer o número de fatores subjacentes. Dessa forma optou-se por reter 5 fatores, pois eles explicaram uma parcela significativa da variabilidade presente nos indicadores. De acordo com esse critério, os autovalores associados a esses fatores atingiram valores suficientemente altos para serem considerados relevantes na análise, permitindo uma representação adequada da estrutura subjacente dos dados. 
+
+  
+```{r tab_sep_grup1, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3", "Fator 4", "Fator 5")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+```{r}
+require("ltm")
+descript.dados = descript(df)
+```
+
+ 
+  
+  A partir da Tabela \ref{tab:alfa_crombach1} podemos observar que a consistência interna dos indicadores em geral é razoável, com o coeficiente alfa de cronbach variando de 0,68 a 0,73. É uma métrica crucial para avaliar a qualidade dos registros de tuberculose nas microrregiões do Brasil, pois sugere que os indicadores estão medindo a mesma característica com coerência.
+  
+
+\newpage
+
+```{r alfa_crombach1, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+  A etapa de seleção de indicadores é um procedimento essencial para aprimorar a precisão e a capacidade explicativa do modelo estatístico. Nessa fase, focamos na identificação e exclusão de indicadores que apresentam correlações menos relevantes ou mais redundantes entre si. O objetivo principal é alcançar um modelo mais eficaz, mantendo ao máximo a representatividade dos dados, mas reduzindo a redundância entre as variáveis.
+
+  Essa abordagem segue uma ordem estratégica, baseada em métricas de correlação, com a exclusão sequencial dos indicadores que têm menor correlação significativa com o conjunto de variáveis restantes. Esse método é implementado progressivamente para aprimorar o ajuste do modelo estatístico, assegurando que os indicadores selecionados apresentem as correlações mais substanciais e significativas entre si.
+
+  É importante salientar que esse processo de seleção e exclusão dos indicadores foi realizado iterativamente, permitindo uma avaliação detalhada e a refinagem constante do modelo. Os passos seguidos durante cada fase desse processo estão detalhadamente documentados no anexo, proporcionando uma visão completa e transparente das etapas executadas para a seleção dos indicadores.
+
+
+\newpage
+
+## Aplicação do modelo de Samejima
+  
+  A construção de um modelo unidimensional é fundamental para compreender a relação entre os indicadores selecionados. O processo segue um conjunto de passos sistemáticos visando identificar e reter os indicadores mais relevantes e consistentes. A análise inicia-se com a determinação do número inicial de fatores, guiado pelo critério de Kaiser, a partir dos indicadores previamente selecionados.
+
+  Para garantir a consistência interna e a unidimensionalidade, calculamos o coeficiente alfa de Cronbach para cada combinação de itens. O alfa de Cronbach próximo a 1 indica maior consistência entre os itens, fortalecendo a suposição de unidimensionalidade. A tabela de correlação policórica é examinada detalhadamente para analisar a relação entre os indicadores. As correlações próximas a 1 ou -1 indicam uma forte associação com o item, corroborando a estrutura unidimensional do modelo.
+
+  Durante a iteração do processo, os indicadores menos relevantes são removidos, baseados na baixa carga fatorial, menor contribuição para a consistência interna ou correlação mínima com o fator. Esse refinamento é realizado iterativamente até obter um conjunto de indicadores que satisfaça os critérios desejados de unidimensionalidade.
+  
+  Todos os passos, critérios e indicadores selecionados são documentados detalhadamente no Anexo do trabalho. Os indicadores selecionados para compor o modelo final foram: Data do início
+do tratamento, Número de contatos examinados, Situação de encerramento, Baciloscopia no
+6º mês, Oportunidade de encerramento, Casos pulmonares sem abandono e Teste para HIV.
+ 
+  A Figura \ref{fig:selecao7} ilustra a matriz de correlação policórica após a atualização dos indicadores selecionados, permitindo uma visualização mais clara das relações entre eles. Essa seleção cuidadosa dos indicadores contribuirá para uma análise mais precisa e abrangente da qualidade dos dados de notificação e registro de tuberculose em diferentes regiões do Brasil.
+
+```{r selecao7, echo=FALSE, fig.align = 7, fig.width = 7,  warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem a tabela."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac62`,
+                           `Enc2`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+  No contexto do modelo de Teoria de Resposta ao Item (TRI) utilizado neste estudo, é fundamental verificar a suposição de unidimensionalidade, que pressupõe a existência de um único fator dominante capaz de explicar a qualidade dos dados nas microrregiões em relação aos itens avaliados, ou seja, a habilidade latente.
+
+  Para avaliar a unidimensionalidade, realizamos a análise dos autovalores da matriz de correlação policórica, como apresentado na Figura \ref{fig:GRAFICO_8}. Os autovalores representam a quantidade de variância explicada por cada fator latente extraído da matriz de correlação policórica. Notavelmente, o primeiro autovalor sozinho representa 54% da variabilidade total dos dados, indicando que uma proporção significativa da variância é explicada por um único fator latente. Esse resultado é consistente com a suposição de unidimensionalidade do modelo TRI aplicado. Além disso, de acordo com o critério de Kaiser (número de autovalores maiores que 1) também temos a indicação da presença de um único fator dominante. 
+
+  Valores elevados do primeiro autovalor indicam que a maior parte da variabilidade dos dados pode ser atribuída a uma única dimensão subjacente, ou seja, à habilidade latente representada pela qualidade dos sistemas de registro dos dados das microrregiões. Essa evidência fortalece a adequação do modelo de Samejima para analisar os dados e estimar a qualidade dos registros de tuberculose nas microrregiões do Brasil.
+
+  Portanto, a análise dos autovalores confirma a solidez do modelo TRI adotado neste estudo e possibilita uma abordagem robusta para compreender e avaliar a qualidade da vigilância epidemiológica da tuberculose em nível local. Os resultados obtidos serão de grande relevância para aprimorar as estratégias de combate à tuberculose e melhorar a qualidade dos dados nas microrregiões brasileiras.
+
+
+
+```{r GRAFICO_8, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+ Os coeficientes de carga da Tabela \ref{tab:tab_sep_grup7}, indicam a força da associação entre cada indicador e o Fator 1 na análise fatorial. Quanto mais próximo de 1 for o coeficiente, maior a associação do indicador com o Fator 1. Com base nas cargas dos indicadores, podemos inferir que o fator em questão está associado a um conjunto de indicadores específicos.
+  
+
+
+```{r tab_sep_grup7, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+A Tabela \ref{tab:alfa_crombach7} fornece informações sobre a consistência interna do conjunto de indicadores após a exclusão de alguns deles. Isso é útil para avaliar a importância de cada indicador na confiabilidade da avaliação. Como podemos observar, o coeficiente para o conjuntos de itens presentes no modelo final foi igual a 0,71, o que é considerado adequado de acordo com a literatura Cronbach, LJ. (1951) \cite{CRB1951}. 
+
+  
+```{r alfa_crombach7, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, linesep = "", caption = "Coeficiente alfa de cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+  Os parâmetros estimados pelo Modelo de Samejima desempenham um papel fundamental na compreensão do comportamento de cada item na avaliação das habilidades latentes nas microrregiões. O parâmetro $a$, também conhecido como parâmetro de discriminação, é uma medida crucial para avaliar o quão bem um item é capaz de diferenciar as microrregiões com diferentes níveis de habilidade. Um valor maior de $a$ indica que o indicador possui um alto poder de discriminação, ou seja, é mais eficiente em distinguir entre microrregiões com habilidades latentes distintas.
+
+  Por outro lado, o parâmetro $b_k$, conhecido como parâmetro de dificuldade, é essencial para compreender o nível de habilidade latente necessário para que a probabilidade de uma microrregião ser classificada em uma categoria superior a $K$ seja igual a 0,5. Se o valor de $b_k$ for negativo, isso sugere que o item é mais fácil, exigindo uma habilidade latente relativamente menor para ser respondido corretamente. Por outro lado, se o valor de $b_k$ for positivo, o item é considerado mais difícil, requerendo uma habilidade latente mais elevada para ser respondido corretamente.
+
+  Ao analisar os dados da Tabela \ref{tab:parametros_samejima}, podemos identificar os itens que possuem maior poder de discriminação, ou seja, aqueles que têm a capacidade mais acentuada de distinguir as microrregiões com habilidades latentes diversas. Neste conjunto de dados, as questões "Situação de encerramento" e "Número de contatos examinados" se destacam com os maiores valores de parâmetro $a$, indicando um alto poder de discriminação desses indicadores.
+
+
+
+
+
+```{r echo=FALSE,message = FALSE}
+
+###### Ajuste do Modelo:
+calcula.b <- function(c.modelo1){
+  matrix.b = c()
+  n = length(c.modelo1)-1
+  for( i in 1:n){
+    linha.b = -1 * (c.modelo1[[i]][-1]/c.modelo1[[i]][1])
+    linha.b = c(c.modelo1[[i]][1], linha.b)
+    matrix.b = rbind(matrix.b, linha.b)}
+  row.names(matrix.b)=names(c.modelo1)[1:n]
+  n.col = dim(matrix.b)[2]-1
+  colu.names = c('a', paste('b', c(1:n.col), sep = ""))
+  colnames(matrix.b) = colu.names
+  frame.b = data.frame(row.names(matrix.b), matrix.b, row.names = NULL)
+  names(frame.b)[1] = "Componentes"
+  return(frame.b)}
+
+
+
+
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+
+ajuste.modelo1 = mirt(df, 1, itemtype = "graded",verbose = FALSE)
+
+```
+
+```{r,echo=FALSE, warning=FALSE, message = FALSE, error = FALSE}
+#Tabela do ajuste 
+theta.modelo1 = fscores(ajuste.modelo1,  method = "EAP")
+c.modelo1 = coef(ajuste.modelo1)
+data.b = calcula.b(c.modelo1)
+theta.adj = fscores(ajuste.modelo1,  method = "EAP")
+
+
+```
+
+
+```{r parametros_samejima, results='asis'}
+
+Componentes <- c("DTITR", "ConEx", "SitEnc", "Bac62", "Enc2", "Abandono2", "HIV")
+
+a <- c("1,5", "2,2", "2,7", "1,1", "1,8", "1,4", "1,9")
+
+b1 <- c("-", "-4,0", "-", "-5,7", "-","-","-3,7")
+
+b2 <- c("-4,2", "-0,82", "-2,8", "-1,5", "1,3","-3,0","0,18")
+
+b3 <- c("-2,3", "0,45", "-1,3", "0,75", "3,7"," 0,28","1,5")
+
+# Crie um data frame com seus dados
+tab <- data.frame(Componentes = Componentes, 
+                    a = a, b1 = b1,
+                  b2 = b2, b3 = b3)
+
+# Use a função kable para criar a tabela
+kable(tab, format = "latex", booktabs = TRUE, longtable = T, 
+                col.names = c("Componentes", "a", "b1"," b2",
+                              " b3"),
+                caption = " Parâmetros do modelo de Samejima para os indicares que compõem o Modelo Proposto",
+                align = "c", digits = 1) %>%
+                kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)") %>%
+                column_spec(1, width = "5cm") %>%
+  row_spec(row=0, bold=TRUE) %>%
+  column_spec(column=1, bold=TRUE)
+  
+
+```
+
+
+
+```{r tabb1, results='asis', eval=FALSE}
+data.b = calcula.b(c.modelo1)
+
+kable(data.b, longtable = T, booktabs = T, align = "lc", caption = "Parâmetros do modelo de Samejima para os indicares que compõem o Modelo Proposto", linesep = "")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+```
+
+
+  A Figura \ref{fig:curva_mod} exibe a curva característica do modelo, onde a habilidade latente é relacionada à probabilidade de os indicadores serem enquadrados em cada uma das categorias. É possível observar que o indicador "Baciloscopia no 6º mês", apresenta um parâmetro de discriminação relativamente baixo. Nota-se que as curvas têm uma sobreposição maior, o que indica que, independentemente da categoria em que cada indicador está classificado, há uma maior incerteza associada à sua habilidade latente.
+
+  Por outro lado, o indicador "Situação de encerramento" apresenta um parâmetro de discriminação mais elevado. É notável como as probabilidades de pertencer a cada uma das categorias variam mais rapidamente para pequenas mudanças na escala de habilidade. Essa resposta acentuada dos indicadores às mudanças na habilidade latente sugere que o indicador "Situação de encerramento" é mais discriminativo, ou seja, é mais sensível para distinguir as diferenças nas habilidades latentes das microrregiões.
+
+  Essa análise da curva característica é fundamental para avaliar a capacidade de cada indicador em medir a qualidade dos registros de tuberculose nas microrregiões do Brasil. Indicadores com parâmetros de discriminação mais elevados são considerados mais informativos e eficientes para diferenciar as microrregiões com habilidades latentes distintas. Por outro lado, indicadores com parâmetros de discriminação mais baixos podem não ser tão distintos e, portanto, podem fornecer informações menos precisas sobre as variações na qualidade dos registros.
+
+
+```{r curva_mod,echo=FALSE, fig.cap = "CCI para os indicadores: (a) Baciloscopia no 6º mês e (b) Situação de encerramento." , warning=FALSE, message = FALSE, fig.width= 7, fig.height= 4}
+samej.model <- function(a, d){
+  theta = seq(-3, 3, by = 0.1)
+  deno = 1 + exp(-1.7*(a*theta + d))
+  model = 1/deno
+  return(model)}
+
+cci.plot <- function(c1){
+  theta = seq(-3, 3, by = 0.1)
+  a = c1[1]
+  d1 = c1[2]; d2 = c1[3]; d3 = c1[4]
+  p1 = 1- samej.model(a, d1)
+  p2 = samej.model(a, d1) - samej.model(a, d2)
+  p3 = samej.model(a, d2) - samej.model(a, d3)
+  p4 = samej.model(a, d3)
+  
+  valores = c(p1, p2, p3, p4) 
+  theta = c(theta, theta, theta, theta)
+  grupo = c(rep(c("Q1", "Q2", "Q3", "Q4"), each=  length(p1)) )
+  data = data.frame(valores, theta, grupo)
+  
+  p<-ggplot(data, aes(x=theta, y=valores, group=grupo, linetype = grupo)) +
+    geom_line(aes(color=grupo), lwd = 1) +
+    labs(x = expression(theta), y = expression(P[ik](theta))) + 
+    theme_bw(base_size = 12)+
+    coord_cartesian(ylim =  c(0,1))+
+    scale_y_continuous(breaks= seq(0,1, by = 0.2))+
+    theme(plot.title = element_text(hjust = 0.5))
+  direct.label(p, 'top.points')}
+
+
+cci.plot2 <- function(c1, nome.subtitle){
+  theta = seq(-3, 3, by = 0.1)
+  a = c1[1]
+  d1 = c1[2]; d2 = c1[3]; d3 = c1[4]
+  p1 = 1- samej.model(a, d1)
+  p2 = samej.model(a, d1) - samej.model(a, d2)
+  p3 = samej.model(a, d2) - samej.model(a, d3)
+  p4 = samej.model(a, d3)
+  
+  valores = c(p1, p2, p3, p4) 
+  theta = c(theta, theta, theta, theta)
+  grupo = c(rep(c("Q1", "Q2", "Q3", "Q4"), each=  length(p1)) )
+  data = data.frame(valores, theta, grupo)
+  
+  p<-ggplot(data, aes(x=theta, y=valores, group=grupo, linetype = grupo)) +
+  geom_line(aes(color=grupo), lwd = 1) +
+      labs(x = expression(theta), y = expression(P[ik](theta)), title = nome.subtitle) + 
+      theme_bw(base_size = 12)+
+      coord_cartesian(ylim =  c(0,1))+
+      scale_y_continuous(breaks= seq(0,1, by = 0.2))+
+      theme(plot.title = element_text(hjust = 0.5))
+  direct.label(p, 'top.points')}
+
+
+
+ex1 = cci.plot2(c.modelo1[[4]], "(a)")
+ex2 = cci.plot2(c.modelo1[[2]], "(b)")
+
+grid.arrange(ex1, ex2, nrow=1, ncol=2)
+```
+
+
+
+  Na Figura \ref{fig:curva_info}, temos à esquerda (a) a curva de informação de cada indicador que compõe o modelo final e à direita (b) a curva de informação do teste, que corresponde à soma das curvas de informação de todos os indicadores. Esse gráfico nos permite visualizar a quantidade de informação disponível para a estimação dos diversos valores de habilidade latente distribuídos ao longo da escala.
+
+  A curva de informação está relacionada com a precisão obtida na estimação da habilidade latente. Quanto maior a quantidade de informação disponível, maior será a precisão da estimativa da habilidade latente para cada microrregião. Dessa forma, uma curva de informação mais elevada indica que os indicadores fornecem uma quantidade substancial de informação sobre a qualidade dos registros de tuberculose nas microrregiões em diferentes níveis de habilidade.
+
+  Destaca-se que, na curva de informação dos indicadores mostrada no Gráfico (a), os indicadores "Sitenc" e "Conex" apresentaram curvas mais elevadas em comparação aos demais, o que sugere uma contribuição significativa desses indicadores ao teste, agregando uma maior quantidade de informação para a estimação da habilidade latente.
+
+  Especificamente, nota-se que o indicador "Situação de encerramento" é mais  discriminante dentro da faixa de -3 a -1, ou seja, ele é capaz de diferenciar bem as  microrregiões que apresentam habilidade latente dentro dessa faixa. Já o item "Número de contatos examinados" é indicado para diferenciar microrregiões que possuem habilidade dentro da faixa de -1 a 1. Observe que cada indicador apresenta uma faixa de habilidade em que a sua função de informação é mais elevada. A função de informação do teste mostrada no Gráfico (b) é a soma de todas as curvas mostradas no Gráfico (a) e representa a capacidade de estimação da habilidade da microrregião, a partir da observação do seu desempenho no preenchimento desse conjunto de itens.
+  
+
+```{r curva_info,echo=FALSE, fig.width= 7, fig.height= 4, fig.cap = "Curva de Informação do Modelo Samejima: (a) Curva de Informação de cada indicador, (b) Curva de Informação do Teste.", warning=FALSE, message = FALSE}
+
+# GRÁFICOS
+
+grafico.todos.items <- function(data.c){
+  data.c$item = str_to_title(data.c$item)
+  cbPalette = colorRampPalette(brewer.pal(7,"Set1"))(7)
+  g.i = ggplot(data.c, aes(x=theta, y=info, group = item, color = item)) +
+    geom_line(aes(color = item, type = item), size = 1) +
+    scale_color_manual(values=cbPalette)+
+    labs(x = expression(theta), y = expression(I(theta)), title = "(a)") + 
+    theme_bw(base_size = 12)+
+    #theme(legend.title=element_blank())
+    #direct.label(g.i, 'top.points')
+    theme(legend.title=element_blank(), legend.position= "top", legend.direction = "horizontal", legend.justification = 'left', plot.title = element_text(hjust = 0.5))+
+    guides(color=guide_legend(ncol= 3))+
+    scale_x_continuous(breaks= seq(-3,3, by = 1))
+  return(g.i)
+}
+
+
+data.c = data.frame()
+theta = seq(-3, 3, by = 0.1)
+for( i in 1:dim(df)[2]){
+  info = testinfo(ajuste.modelo1, theta, which.items = i)
+  data = data.frame(theta, info)
+  data$item = colnames(df)[i]
+  data.c = rbind(data.c, data)}
+data.c$item = factor(data.c$item, levels = names(df))
+
+info.item = grafico.todos.items(data.c)
+
+
+theta = seq(-3.8, 3.8, by = 0.1)
+info = testinfo(ajuste.modelo1, theta)
+data = data.frame(theta, info)
+
+info.p <-ggplot(data, aes(x=theta, y=info)) +
+  geom_line(color = "blue", lwd = 1.2) +
+  scale_x_continuous(breaks= seq(-3,3, by = 1))+
+  labs(x = expression(theta), y = expression(I(theta)), title = "(b)") + 
+  theme_bw(base_size = 12)+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+nt <- theme(legend.position='none')
+grid.arrange(info.item, info.p, nrow=1, ncol=2)
+
+```
+
+
+
+  Observando o Gráfico (b), que representa a curva de informação do teste, podemos perceber como a quantidade de informação muda à medida que a habilidade latente varia ao longo da escala. Nota-se que o teste é capaz de estimar com maior acurácia habilidades baixas e médias, uma vez que para habilidades mais altas (acima de 1) há uma queda expressiva na curva de informação. 
+  
+  A análise da curva de informação é relevante para entender a eficiência do teste como um
+todo. Quando a curva de informação é mais acentuada e ampla, isso indica que o teste possui
+uma boa capacidade de diferenciar as microrregiões em relação à qualidade dos registros de
+tuberculose. Por outro lado, uma curva de informação mais estreita indica que o teste pode
+não ser tão sensível em detectar as diferenças nas habilidades latentes.
+  
+  É relevante mencionar que a predominância da influência de um indicador não invalida os demais itens da análise. Cada indicador contribui com informações importantes, e sua inclusão na avaliação é fundamental para uma análise abrangente e precisa. A combinação dos diferentes indicadores permite obter uma visão completa da qualidade dos registros de tuberculose e identificar possíveis lacunas ou áreas de melhoria no sistema de coleta e registro de informações sobre a doença.
+
+
+## Avaliação da qualidade dos dados nas microrregiões do Brasil
+
+  A comparação entre as microrregiões do Brasil por meio de boxplots na Figura \ref{fig:boxplot_graf} revelou diferenças marcantes nos resultados da qualidade dos registros de tuberculose. As regiões Sul, Centro-Oeste e Sudeste destacaram-se como as de melhor desempenho, enquanto a região Nordeste apresentou um desempenho inferior em relação às demais.
+
+  Ao observar os boxplots, notamos que as regiões Sul, Centro-Oeste e Sudeste apresentaram medianas e quartis superiores mais altos, indicando uma maior qualidade da informação referente à tuberculose nas microrregiões desses estados. Isso sugere uma uniformidade mais efetiva nos processos de notificação e registro da tuberculose nessas regiões.
+
+  Por outro lado, a região Nordeste apresentou mediana e quartil inferior mais baixo e maior amplitude, indicando uma variação mais ampla nos indicadores de qualidade entre as microrregiões. Essa variação pode refletir diferenças na eficácia dos sistemas de vigilância e nas práticas de registro da tuberculose, indicando uma necessidade de medidas específicas para padronização e melhoria desses processos.
+
+  É crucial salientar que a comparação entre as microrregiões não deve ser interpretada como uma análise de superioridade ou inferioridade, mas sim como uma avaliação das características específicas de cada região em relação à qualidade dos registros de tuberculose. É fundamental ressaltar as variações identificadas, especialmente na região Nordeste, para melhorar a consistência e a confiabilidade dos registros de casos de tuberculose e, assim, fortalecer as estratégias de controle e prevenção da doença nessas áreas.
+  
+  Adicionalmente, a aplicação do teste Kruskal-Wallis entre as regiões do Brasil demonstrou uma diferença estatisticamente significativa na qualidade dos registros de tuberculose (Kruskal-Wallis: Qui-Quadrado = 73, Graus de Liberdade = 4, p-valor = 0,000). Esse resultado reforça e corrobora as observações feitas nos boxplots, fornecendo evidências estatísticas robustas da diferença na qualidade dos registros de tuberculose entre as regiões do país. 
+```{r, echo=FALSE, warning=FALSE, message = FALSE}
+
+theta.adj <- data.frame(bd$COD_MICRO, theta.adj)
+
+
+data.theta = data.frame(theta.adj, dados_agrupados$`regiao`, dados_agrupados$`Comp_Bac22`)
+names(data.theta) = c("Cod_Micro","TRI", "Região")
+data.theta$RANQUE_TRI = rank(-1*data.theta$TRI, ties.method = "min")
+
+```
+
+
+```{r boxplot_graf, echo=FALSE, fig.cap = "Boxplot dos escores estimados de acordo com a região de origem. ", warning=FALSE, message = FALSE, eval = T, fig.width= 5.5, fig.height=4}
+# Definir a lista de colunas a serem tratadas como variáveis
+ggplot(data.theta, aes(x = Região, y = TRI)) +
+  geom_boxplot(fill = "#69b3a2", color = "black", outlier.color = "black", width = 0.6) +
+  labs(x = "Região", y = "Escore de qualidade da informação") +
+  theme_minimal() +
+  theme(panel.background = element_rect(fill = "white"),
+        axis.text.x = element_text(size = 11)) +
+  ylim(-3, 3) 
+
+
+
+```
+
+Por fim, a Tabela \ref{fig:boxplot_graf} mostra a comparação das regiões par a par utilizando o teste de Wilcoxon com aplicação da correção de Bonferroni. Considerando o nível de 5% de significância, pode-se dizer que houve diferença significativa entre os seguintes pares de regiões: (Nordeste e Centro-Oeste), (Nordeste e Sudeste), (Nordeste e Sul), (Sudeste e Norte), (Sul e Norte). 
+  
+  
+
+```{r kwalis, results='asis', eval=FALSE}
+
+teste = kruskal.test(TRI ~ Região, data = data.theta)
+
+estatisticas <- cbind(teste$statistic, teste$p.value)
+
+teste
+
+
+```
+
+
+
+```{r tabwil, results = "asis"}
+
+pairwise_wilcox <- pairwise.wilcox.test(data.theta$TRI, data.theta$Região, p.adjust.method = "bonferroni")
+
+options(knitr.kable.NA = '')
+kable(pairwise_wilcox[[3]], digits = 4,  longtable = T, booktabs = T, align = "c", linesep = "",caption = "Comparações par a par utilizando o teste de Wilcoxon com aplicação da correção de Bonferroni (p-valor)" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)
+
+```
+
+
+  Após a análise dos indicadores de qualidade dos registros de tuberculose nas diferentes microrregiões do Brasil, os resultados foram apresentados de forma geográfica por meio de um mapa temático. O mapa permite uma visualização espacial dos dados e facilita a identificação de padrões e disparidades regionais.
+
+
+  Na representação cartográfica, utilizou-se uma escala de cores para destacar as diferenças na qualidade dos registros de tuberculose entre as microrregiões. As cores em verde indicam melhor qualidade, enquanto as cores em tom vermelho representam menor qualidade dos registros.
+
+  
+  O mapa da qualidade dos registros de tuberculose nas microrregiões, mostrado na Figura \ref{fig:mapa}, revela uma distribuição heterogênea do desempenho entre as áreas do país. Microrregiões localizadas no Acre e em São Paulo apresentam tonalidades mais verdes, sugerindo um melhor desempenho nos indicadores analisados. Isso pode indicar uma maior consistência e qualidade nos registros de tuberculose nessas áreas, refletindo possíveis processos eficazes de vigilância epidemiológica e notificação de casos.
+
+  Por outro lado, observa-se tonalidades mais avermelhadas em algumas regiões do Nordeste. Isso sugere um desempenho inferior em relação aos indicadores de qualidade dos registros de tuberculose. Essas variações podem apontar para desafios específicos nessas regiões, como problemas na padronização dos processos de notificação, coleta e registros de dados.
+
+
+  
+```{r mapa, echo=FALSE, fig.cap = " Mapa com o Escore de Qualidade da Informação.", warning=FALSE, message = FALSE, eval = T}
+
+data.theta$Cod_Micro = as.character(data.theta$Cod_Micro)
+dados1$code_micro = as.character(dados1$code_micro)
+
+dados3 <- merge(x = dados1, y = data.theta, by.x = "code_micro", by.y = "Cod_Micro", all.x = FALSE)
+
+# Definir a paleta de cores para a escala (-3 a 3)
+color_palette <- colorRampPalette(c("red", "yellow", "green"))(100)
+
+# Criar o mapa com título
+ggplot() +
+  geom_sf(data = dados3, aes(fill = TRI)) +
+  scale_fill_gradientn(colors = color_palette, na.value = "white", limits = c(-3, 3)) +
+  labs(fill = "TRI") +
+  theme_bw()
+```
+
+
+\newpage
+
+# Conclusão
+
+ Entre os propósitos delineados neste estudo, torna-se evidente a importância de uma avaliação minuciosa do sistema de vigilância epidemiológica da tuberculose. Utilizando a Teoria de Resposta ao Item (TRI) e a categorização dos indicadores selecionados, conseguimos elucidar a qualidade dos registros de notificação e acompanhamento da doença em microrregiões do Brasil, durante o período entre 2012 e 2014.
+
+  A aplicação da TRI mostrou-se uma abordagem inovadora e eficaz na análise da qualidade dos dados. Não apenas permitiu a classificação das microrregiões com base nos escores, mas também proporcionou uma compreensão mais profunda dos padrões e comportamentos dos indicadores selecionados. Os resultados apresentados na Figura \ref{fig:mapa} refletem a diversidade da situação epidemiológica em todo o país, oferecendo um panorama claro e objetivo.
+
+  Identificamos que Acre, Roraima e São Paulo exibiram desempenho satisfatório na vinculação de registros. Em contraste, Paraíba, Rio Grande do Norte, Alagoas e Bahia, no Nordeste, apresentaram deficiências na vigilância relacionada à qualidade da informação, detecção e acompanhamento de casos de tuberculose. Essas análises, corroboradas pelo estudo anterior de boxplots, realçam a necessidade de priorização da região Nordeste, enquanto as microrregiões do Norte requerem um nível médio de priorização.
+
+  Esses resultados destacam as profundas desigualdades geográficas no Brasil e a urgência de investimento nas áreas menos favorecidas ou na implementação de estratégias de vigilância diferenciadas.
+
+  As descobertas deste estudo têm implicações significativas para o aprimoramento da vigilância da tuberculose. A identificação das microrregiões com desempenho inferior em notificação e registro oferece uma base sólida para intervenções direcionadas. Além disso, as conclusões podem orientar estratégias para capacitação de profissionais de saúde, conscientização da população e implementação de medidas visando reduzir a subnotificação.
+
+  A análise da matriz de correlação e dos parâmetros estimados pelo Modelo de Samejima proporcionou insights cruciais sobre a relação entre os indicadores e sua contribuição para a avaliação geral da qualidade dos registros. O entendimento das curvas de informação e dos autovalores enriqueceu a interpretação, validando a unidimensionalidade do modelo utilizado.
+
+  Apesar do progresso substancial, é relevante reconhecer as limitações deste estudo. As análises basearam-se em dados de 2012 a 2014, possivelmente não refletindo a situação atual. Em última análise, esta pesquisa contribui para a epidemiologia ao explorar novas abordagens para avaliar a qualidade da vigilância da tuberculose. Os resultados e métodos apresentados podem servir como base para estudos futuros sobre a subnotificação de casos de tuberculose e intervenções, impulsionando esforços contínuos para o controle efetivo dessa doença. O comprometimento com a melhoria contínua dos sistemas de vigilância é crucial para garantir a saúde e bem-estar da população, e este estudo representa um passo significativo nessa direção.
+
+
+\newpage
+
+
+\phantomsection
+ 
+\phantomsection
+\addcontentsline{toc}{section}{Referências} 
+\bibliographystyle{abbrv}
+\begin{thebibliography}{x} \label{referencias} 
+
+  \bibitem[Braga JU (2007)]{BragaJU01_03}
+  Braga JU. Vigilância epidemiológica e o sistema de informação da tuberculose no Brasil, 2001-2003.\emph{Rev Saude Publica}, 41(Supl. 1):77-87, 2007.
+  
+  
+  \bibitem[BIRNBAUM (1968)]{Birnbaum_68}
+  Birnbaum A. Some Latent Trait Models and Their Use in Infering an Examinee’s Ability. In F.M. Lord \& M.R. Novick. \emph{Statistical Theories of Mental Test Scores}. Reading, MA:Addison-Wesley; 1968.
+  
+
+  \bibitem[CRONBACH, LJ (1951)]{CRB1951}
+  Cronbach LJ. Coefficient alpha and the internal structure of test. \emph{Psychometrika}; 1951.
+  
+
+  \bibitem[Drasgow, F (2006)]{DRASGOW2006}
+  Drasgow F. Polyserial and Polychoric correlations. In S. Kotz, N. Balakrishnan, C. Read, B. Vidakovic and N. L. Johnson (Eds.), \emph{Encyclopedia of Statistical Sciences} (2nd ed., Vol. 9, pp. 6244-6248). New York: John Wiley and Sons; 2006. 
+  
+
+  \bibitem[Mingoti, SA. (2007)]{Mingoti2007}
+  Mingoti SA. Análise de Dados Através de Métodos de Estatística Multivariada. Uma Abordagem Aplicada. ED. UFMG Belo Horizonte. 293p, 2007.
+  
+  
+  \bibitem[Brasil. Ministério da Saúde (2010)]{MBS2010}
+   Ministério da Saúde do Brasil. Instrutivo para preenchimento da Programação das Ações de Vigilância em Saúde nas unidades federadas – 2010 – 2011: Tuberculose. Brasília: MS; 2010.
+  
+  
+  \bibitem[Brasil. Ministério da Saúde (2011)]{MBS2011}
+  Ministério da Saúde do Brasil. Manual de Recomendações para o Controle da Tuberculose no Brasil. Brasília: MS; 2011.
+  
+  
+  \bibitem[Ministério da Saúde do Brasil (2017)]{MSB2017}
+  Ministério da Saúde. Secretaria de Vigilância em Saúde. Instrutivo Programa de Ações do Sistema Nacional de Vigilância em Saúde, 2013-2015. [Internet]; 2017. Disponível em: \url{http://www.saude.pi.gov.br/pactuacao2013/pavs2013/Instrutivo-SNVS-2013.pdf}
+  
+  
+  \bibitem[Ministério da Saúde do Brasil (2019)]{MSB2019}
+  Ministério da Saúde do Brasil. Brasil livre da tuberculose: evolução dos cenários epidemiológicos e operacionais da doença. \emph{Bol Epidemiol}, 50(9):1-18, 2019. Disponível em: \url{http://portalarquivos2.saude.gov.br/images/pdf/2019/marco/22/2019-009.pdf}.
+
+
+  \bibitem[Oliveira, GP, et al.(2010)]{OLV2010}
+  Oliveira GP, \emph{et al}. Linkage entre SIM e SINAN para a melhoria da qualidade dos dados do sistema de informação da tuberculose: a experiência nacional. \emph{Cad Saúde Colet} (Rio J.), 18: 107-11, 2010. 
+  
+  
+  \bibitem[Oliveira PB, Oliveira GP, Codenotti SB, Saraceni V, Nóbrega AA, Sobel J.(2010)]{Oliveira_PB2010}
+  Oliveira PB, Oliveira GP, Codenotti SB, Saraceni V, Nóbrega AA, Sobel J. Avaliação do sistema de vigilância da tuberculose no município do Rio de Janeiro, 2001 a 2006. \emph{Cad Saúde Coletiva}, 18(3):337-346, 2010.
+  
+   \bibitem[Olsson (1979)]{Olsson_79}
+  Olsson U. Maximum likelihood estimation of the polychoric correlation coefficient. \emph{Psychometrika}, 44, 443-460, 1979.
+
+  
+  \bibitem[FUNDAMENTALS OF ITEM RESPONSE THEORY(1991)]{FRT91}
+  Hambleton RK, Swaminathan H, Rogers JH. Fundamentals of Item Response Theory; 1991.
+  
+
+  \bibitem[Samejima (1969)]{Samejima_69}
+  Samejima, FA. Estimation of latent ability using a response pattern of graded scores. \emph{Psychometric Monograph}, 17; 1969.
+  
+
+  \bibitem[Santos, M.L, et al. (2018)]{SML2018}
+  Santos ML, \emph{et al}. Factors associated with underreporting of tuberculosis baseadon data from Sinan Aids and Sinan TB. \emph{Revista Brasileira de Epidemiologia}, 21:(e1800190), 2018.
+  
+  
+  \bibitem[Silva, G.D.M., Bartholomay, L., Cruz, O.G. and Garcia, L.P. (2017)]{SilvaGDM2017}
+  Silva GDM, Bartholomay L, Cruz O, Garcia LP. .Evaluation of data quality, timeliness and acceptability of the tuberculosis surveillance system in Brazil’s microregions.\emph{Ciência \& Saúde Coletiva}, 22(10), 3307–3319, 2017.
+  
+
+  \bibitem[Stoner, O; Economou, T; Drummond, G.(2019)]{Stoner2019}
+  Stoner O, Economou T, Drummond G. A Hierarchical Framework for Correcting Under-Reporting in Count Data. \emph{Journal of the American Statistical Association}, 114(528),1481-1492, 2019.
+  
+
+  \bibitem[World Health Organization (2012)]{WHO2012}
+  World Health Organization. Assessing Tuberculosis Under-reporting Through Inventory Studies. Geneva, Switzerland; 2012.
+  
+
+  \bibitem[World Health Organization (2017)]{WHO2017}
+  World Health Organization. Global Tuberculosis Report, Geneva, Switzerland; 2017.
+ 
+  
+  \bibitem[World Health Organization (2018)]{WHO2018}
+  World Health Organization. Global tuberculosis report 2018. Geneva:\emph{WHO}; 2018.
+  Disponível em: \url{http://www.who.int/tb/publications/global_report/en/}.
+
+
+\end{thebibliography}
+
+
+\newpage
+
+# Anexo  
+
+## 1º Passo
+
+  O primeiro passo consistiu na análise fatorial baseada em 14 indicadores selecionados por especialistas na literatura. Nesse ajuste inicial, o primeiro autovalor por si só explicava apenas 36% da variabilidade dos dados. Essa proporção indicava que um único fator subjacente não era suficiente para representar a complexidade das informações contidas nos indicadores.
+
+  No processo inicial de ajuste, foi analisado o valor do coeficiente alfa de cronbach, conforme apresentado na Tabela \ref{tab:alfa_crombach1rep}. Esta métrica é fundamental para avaliar a confiabilidade dos dados e determinar se um indicador contribui de forma substancial para a consistência interna da avaliação.
+
+  Na análise desses valores, observou-se que os indicadores "Consistencia2" e "Contato" obtiveram valores mais elevados em comum (0.73), ambos com a mesma associação positiva com o Fator 1.
+
+  Posteriormente, na tentativa inicial de melhorar o ajuste, o indicador "Consistencia2" foi excluído. Essa decisão foi baseada na matriz de correlação apresentada na Figura \ref{fig:selecao1rep}. Nessa matriz, o indicador em questão apresentou os maiores valores próximos de -1, indicando uma forte correlação negativa.
+
+```{r selecao1rep, echo=FALSE, warning=FALSE, fig.height= 7, fig.width= 7,  message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+df = subset(bd, select= c(`DTITR`: `HIV`))
+
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 11, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+ 
+```
+
+```{r GRAFICO_1rep, fig.height= 4.5, fig.with = 6,  echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica dos 14 indicadores."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+  
+```{r tab_sep_grup1rep, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3", "Fator 4", "Fator 5")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+```{r alfa_crombach1rep, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+## 2º Passo
+
+
+  No entanto, neste segundo ajuste, o primeiro autovalor ainda permanece explicando apenas 36% da variabilidade dos dados. Essa proporção sinaliza que um único fator subjacente não é suficiente para representar a complexidade das informações contidas nos indicadores.
+
+  Ao analisar novamente o coeficiente alfa de cronbach, expresso na Tabela \ref{tab:alfa_crombach}, observamos um empate entre os indicadores "Not" e "Contato", ambos com um valor de (0.74) e associados ao Fator 2.
+
+  Com o objetivo de aprimorar essa segunda fase do ajuste, optou-se por excluir o indicador "Contato". Essa decisão foi baseada na matriz de correlação representada na Figura \ref{fig:selecao}, onde o indicador apresenta um valor negativo mais significativo e uma maior associação ao fator 2, conforme evidenciado na Tabela \ref{tab:tab_sep_grup}.
+
+```{r selecao, fig.height= 7, fig.width= 7, echo=FALSE, warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(bd, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac22`,`Bac62`,`Not`,
+                           `Dig`,`Trat`,`Enc2`,`Contato`,`Bac`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+
+
+```{r GRAFICO_2, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+
+
+```{r tab_sep_grup, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3", "Fator 4")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message = FALSE, eval = F}
+
+corr.bis <- data.frame(Item_incluído = descript.dados$bisCorr, Item_excluído = descript.dados$ExBisCorr)
+names(corr.bis) = c("Item incluído", "Item excluído")
+row.names(corr.bis) = gsub("Questao_", "Questão ", row.names(corr.bis))
+indice = 1:dim(corr.bis)[1]
+ind.marca = indice[corr.bis[,2] <0.1]
+
+legenda2 = paste("Correlação Ponto Bisserial")
+
+
+kable(corr.bis, longtable = T, booktabs = F, align = "c", digits = 2)%>%
+  row_spec(row=ind.marca, background="red")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)
+
+```
+
+
+  
+```{r alfa_crombach, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+## 3º Passo
+
+  Na terceira etapa, observamos uma leve melhora no ajuste, onde o primeiro autovalor passa a explicar 39% da variabilidade dos dados. Apesar disso, continua insuficiente para abarcar a complexidade das informações contidas nos indicadores.
+
+  Ao analisar novamente o coeficiente alfa de cronbach, apresentado na Tabela \ref{tab:alfa_crombach2}, notamos um empate entre "Not", associado ao Fator 2, e "Dig", associado ao Fator 3, ambos com um valor de (0.75).
+
+  Para aprimorar essa terceira etapa do ajuste, a decisão foi baseada nos maiores valores associados aos respectivos fatores, conforme detalhado na Tabela \ref{tab:tab_sep_grup2}. Ao considerar que a matriz de correlação apresentou características semelhantes, a prioridade foi dada aos fatores predominantes, levando à exclusão do indicador "Not" como parte desse refinamento.
+
+
+```{r selecao2, fig.height= 7, fig.width= 7, echo=FALSE, warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac22`,`Bac62`,`Not`,`Dig`,
+                           `Trat`,`Enc2`,`Bac`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+
+```{r GRAFICO_3, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+```{r tab_sep_grup2, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3", "Fator 4")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+  
+```{r alfa_crombach2, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+
+## 4º Passo
+
+
+  Na quarta etapa da seleção de indicadores, após os ajustes anteriores, observou-se uma evolução nos resultados, visto que o primeiro autovalor agora explica 41% da variabilidade dos dados. Apesar disso, ainda há espaço para aprimoramentos, uma vez que essa proporção continua indicando que um único fator subjacente pode não ser suficiente para representar a complexidade das informações nos indicadores.
+
+  Analisando os valores de alfa de Cronbach, apresentados na Tabela \ref{tab:alfa_crombach3}, identificou-se uma associação notável entre os indicadores "Dig" e "Trat", ambos com um valor de (0.75) e uma forte associação com os Fatores 2 e 4 respectivamente.
+
+Nesta fase, optou-se pela exclusão do indicador "Dig" para aprimorar o ajuste do modelo. Essa decisão foi baseada na análise direta da matriz de correlação evidenciado pelos valores da Figura \ref{fig:selecao3}, nela o indicador em quesão apresenta um número maior de valores negativos.
+
+```{r selecao3, fig.height= 7, fig.width= 7, echo=FALSE, warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac22`,`Bac62`,`Dig`,
+                           `Trat`,`Enc2`,`Bac`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+
+```{r GRAFICO_4, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+```{r tab_sep_grup3, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3", "Fator 4")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+  
+```{r alfa_crombach3, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+## 5º Passo
+
+
+  Na quinta etapa da seleção de indicadores, após ajustes anteriores, percebeu-se uma melhora considerável nos resultados, tendo como referência o 4º passo o primeiro autovalor agora explica 45% da variabilidade dos dados. Embora essa proporção demonstre uma evolução significativa, sugere-se que a complexidade dos indicadores ainda não esteja completamente representada por um único fator subjacente.
+
+  Ao analisar os valores do alfa de Cronbach, detalhados na Tabela \ref{tab:alfa_crombach4}, verificou-se uma forte associação entre os indicadores "Trat" e "Bac", ambos com valor de (0.75) e uma significativa conexão com os Fatores 1 e 3, respectivamente. A matriz de correlação por sua vez não apresentou valores negativos.
+
+  Nesta fase, optou-se por excluir o indicador "Bac" para aprimorar o ajuste do modelo. Essa escolha foi fundamentada na análise direta dos valores da Tabela \ref{tab:tab_sep_grup4} respeitando os maiores valores associados aos respectivos fatores.
+
+```{r selecao4, fig.height= 7, fig.width= 7, echo=FALSE, warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac22`,`Bac62`,
+                           `Trat`,`Enc2`,`Bac`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+
+```{r GRAFICO_5, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+```{r tab_sep_grup4, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+  
+```{r alfa_crombach4, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+
+## 6º Passo
+
+
+  Na sexta etapa da seleção de indicadores,  houve uma notável progressão nos resultados obtidos. O primeiro autovalor agora explica 48% da variabilidade dos dados, sugerindo uma significativa melhoria na representação dos indicadores por meio de um único fator subjacente.
+
+  Ao observar os valores do alfa de Cronbach, destacados na Tabela \ref{tab:alfa_crombach5}, identificou-se que somente o indicador "Trat" apresentou um valor mais elevado, alcançando (0.76) e demonstrando uma correlação mais substancial com o Fator 1. Em contrapartida, os demais indicadores não exibiram valores igualmente expressivos de alfa de Cronbach.
+
+  Dessa forma, na busca por uma maior otimização do modelo, decidiu-se excluir o indicador "Trat". Essa decisão foi fundamentada na análise direta do valor de alfa de Cronbach, tendo em vista a ausência de empates ou similaridades significativas com os demais indicadores.
+
+
+```{r selecao5, fig.height= 7, fig.width= 7, echo=FALSE, warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac22`,`Bac62`,
+                           `Enc2`,`Trat`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+
+```{r GRAFICO_6, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+```{r tab_sep_grup5, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2", "Fator 3")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+  
+```{r alfa_crombach5, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+
+
+
+## 7º Passo
+ 
+ após a finalização da sexta etapa, foi possível obter a representação dos dados por apenas dois fatores. Neste estágio, o primeiro autovalor alcançou um valor aceitável para explicar parte significativa da variabilidade dos dados. Além disso, ao analisar a matriz de correlação, notou-se que os valores se aproximam de +1, indicando uma forte correlação positiva entre os indicadores selecionados.
+ 
+  Focalizando apenas nos indicadores presentes no segundo fator, percebeu-se a necessidade de remover apenas um deles para aprimorar ainda mais o modelo. O critério adotado foi a exclusão do indicador que apresentava o maior valor associado ao segundo fator no caso em questão "Bac22". Dessa forma, alcançou-se o ajuste mais otimizado possível para os dados selecionados no escopo deste projeto.
+
+```{r selecao6, fig.height= 7, fig.width= 7, echo=FALSE, warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac22`,`Bac62`,
+                           `Enc2`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+
+```{r GRAFICO_7, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+```{r tab_sep_grup6, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+#tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1", "Fator 2")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+\newpage
+
+```{r alfa_crombach6, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, caption = "Alfa de Cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
+
+
+## 8º Passo
+
+
+  Durante a última etapa do processo de seleção de indicadores, após a conclusão da sétima fase, observamos uma estabilização no ajuste do modelo, resultando na representação dos dados por apenas um fator. Nesta fase, o primeiro autovalor atingiu um patamar considerado aceitável para explicar uma parte significativa da variabilidade presente nos dados. Essa descoberta é crucial, pois indica que uma grande parcela da informação contida nos indicadores selecionados pode ser explicada por um único fator subjacente.
+
+
+```{r selecao7rep, echo=FALSE, fig.align = 7, fig.width = 7,  warning=FALSE, message = FALSE,fig.cap = "Coeficiente de Correlação de Policórica entre as variáveis que compõem o estudo."}
+
+df = subset(df, select = c(`DTITR`,`ConEx`,`SitEnc`,`Bac62`,
+                           `Enc2`,`Abandono2`,`HIV`))
+# Calcular a matriz de correlação
+#corr_matrix <- cor(df, method = 'pearson', use = 'na.or.complete')
+cor.bd = polychoric(df)$rho
+corr_matrix = round(cor.bd, 1)
+
+
+# # Código para criar o gráfico
+ melt_corr <- melt(corr_matrix)
+ ggplot(melt_corr, aes(x = Var1, y = Var2, fill = value)) +
+   geom_tile(color = 'white') +
+   geom_text(aes(label = round(value, 2)), color = 'black', size = 3) +  # Camada de texto
+   scale_fill_gradient2(low = 'tomato2', high = 'springgreen3', mid = 'white',
+                        midpoint = 0, limit = c(-1, 1), space = "Lab",
+                        name = "Correlação policórica") +
+   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1,
+                                    size = 10, hjust = 1)) +
+  coord_fixed()+
+  labs(x = "", y = "")
+
+```
+
+
+```{r GRAFICO_8rep, echo=FALSE, fig.cap = "Proporção dos autovalores da matriz de correlação policórica das variáveis que compõem a tabela."}
+#Autovalores da matriz de correlação policórica das questões quem compõem a tabela
+
+# Calcular os autovalores da matriz imputada
+autovalores <- eigen(corr_matrix)$values
+var.autovalores <- autovalores/length(autovalores)
+autovalores <- Re(eigen(corr_matrix)$values)
+var.autovalores = round((var.autovalores*100),0)
+var.autovalores<- paste(var.autovalores, "%", sep = "")
+nomes.eig = paste("Fator", c(1:length(autovalores)), sep = " ")
+y.t = c(1:length(autovalores))
+
+plot(y.t, autovalores, type = 'o', ylab = 'Magnitude do Autovalor', col = "blue",  xaxt = "n", xlab = "", pch = 20, ylim = c(0.9*min(autovalores), 1.1* max(autovalores)))
+axis(1, y.t, nomes.eig , las = 2)
+abline(h=1, col = 'gray80', lty = 2)
+text(y.t +.1 , autovalores+0.3,  var.autovalores, cex = 0.9)
+
+```
+
+
+
+```{r tab_sep_grup7rep, echo=FALSE, warning=FALSE, message = FALSE, results='asis'}
+n.fa = sum(autovalores >1)
+solution = fa(corr_matrix, nfactors = n.fa)
+
+## Análise Fatorial - separação das questões em grupos
+tab = cbind(solution$loadings[,1:n.fa])
+tab = round(tab,2)
+tab.aux = data.frame(row.names(tab), tab, row.names = NULL)
+colnames(tab.aux) = c("Componentes", paste("Fator", c(1:n.fa), sep = " "))
+max.linha = rowMaxs(as.matrix(tab.aux[,-1]))
+tab.aux2 = tab.aux
+tab.aux2[,-1][tab.aux[,-1] !=  max.linha ] = "-" 
+tab.aux2 = data.frame(tab.aux2, row.names = NULL)
+colnames(tab.aux2) = c("Componentes", "Fator 1")
+
+
+
+kable(tab.aux2, longtable = T, booktabs = T, align = "c", linesep = "",caption = "Análise Fatorial - separação das questões em grupos" )%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(row=0, bold=TRUE)%>%
+  column_spec(column=1, bold=TRUE)#%>%
+#column_spec(column=2, background="lightgray")
+
+
+```
+
+
+
+```{r}
+descript.dados = descript(df)
+```
+
+
+\newpage
+```{r alfa_crombach7rep, echo=FALSE, warning=FALSE, message = FALSE, eval=T, results = "asis"}
+###  Alfa de Cronbach
+
+data.alfa = round(descript.dados$alpha,2)
+indice = 1:dim(data.alfa)[1]
+ind.marca = indice[data.alfa[,1] >= data.alfa[1,1]]
+ind.marca = ind.marca[-1]
+row.names(data.alfa) = gsub("All Items", "Todos os Itens", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Excluding", "Excluindo", row.names(data.alfa) )
+row.names(data.alfa) = gsub("Questao_", "Questão ", row.names(data.alfa) )
+#row.names(data.alfa) = gsub("Class_", "", row.names(data.alfa) )
+colnames(data.alfa) = "Valor"
+data.alfa = round(data.alfa, 2)
+data.alfa = data.frame(row.names(data.alfa), data.alfa )
+row.names(data.alfa) = NULL
+colnames(data.alfa) = c("Item", "Alfa de Cronbach")
+
+kable( data.alfa, align = 'c', booktabs = T, longtable=TRUE, linesep = "", caption = "Coeficiente alfa de cronbach")%>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"), stripe_color = "light-gray", repeat_header_text = "(Continuação)")%>%
+  row_spec(c(0), bold=TRUE)%>%
+  column_spec(c(1), bold=TRUE)
+```
